@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace BNT\Bounty\Mapper;
 
 use BNT\Bounty\Entity\Bounty;
+use BNT\Mapper;
 
-class BountyMapper implements \BNT\ServantInterface
+class BountyMapper extends Mapper
 {
     public Bounty $bounty;
     public array $row;

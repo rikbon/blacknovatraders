@@ -1,0 +1,190 @@
+{% extends "layout.twig" %}
+{% block title %}Galactic Knowledge Base &amp; FAQ{% endblock %}
+{% block content %}
+    <div style="margin-bottom: 24px;">
+        <h2 style="color: var(--cyan); margin-bottom: 6px;">Galactic Knowledge Base &amp; Strategy FAQ</h2>
+        <p style="color: var(--text-muted); font-size: 14px; margin: 0;">
+            Comprehensive reference guide for tactics, planetary colonization, economic arbitrage, and survival mechanics in <strong>BlackNova Traders</strong>.
+        </p>
+    </div>
+
+    <!-- Quick Category Jump -->
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; background: rgba(15, 23, 42, 0.6); padding: 12px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+        <a href="#newplayers" class="btn" style="font-size: 12px; padding: 4px 10px;">New Commanders</a>
+        <a href="#strategies" class="btn" style="font-size: 12px; padding: 4px 10px;">Tactical Archetypes</a>
+        <a href="#combat" class="btn" style="font-size: 12px; padding: 4px 10px;">Combat Mechanics</a>
+        <a href="#colonization" class="btn" style="font-size: 12px; padding: 4px 10px;">Planetary Colonization</a>
+        <a href="#bank" class="btn" style="font-size: 12px; padding: 4px 10px;">Intergalactic Banking (IGB)</a>
+        <a href="#qa" class="btn" style="font-size: 12px; padding: 4px 10px;">Q&amp;A</a>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 24px;">
+        
+        <!-- New Commanders Briefing -->
+        <div id="newplayers" style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+            <h3 style="color: var(--cyan); font-size: 1.2rem; margin-bottom: 12px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px;">
+                1. New Commander Survival Briefing
+            </h3>
+            
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+                <div style="background: rgba(30, 41, 59, 0.5); padding: 14px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                    <strong style="color: var(--emerald); display: block; font-size: 14px; margin-bottom: 4px;">Rule #1: Always Equip an Escape Pod &amp; Emergency Warp Unit (EWD)</strong>
+                    <p style="font-size: 13px; color: var(--text-muted); margin: 0;">
+                        Space is perilous. If your vessel is ambushed and destroyed without an Escape Pod, you lose all accumulated credits and unfortified assets. An Escape Pod guarantees your commander survives to purchase a new hull.
+                    </p>
+                </div>
+
+                <div style="background: rgba(30, 41, 59, 0.5); padding: 14px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                    <strong style="color: var(--cyan); display: block; font-size: 14px; margin-bottom: 4px;">Federation Sanctuary (Sector 1)</strong>
+                    <p style="font-size: 13px; color: var(--text-muted); margin: 0;">
+                        Sector 1 is strictly guarded by the Federation. Combat and piracy are prohibited. When logging off for extended periods during early game stages, dock in Federation space to avoid surprise attacks.
+                    </p>
+                </div>
+
+                <div style="background: rgba(30, 41, 59, 0.5); padding: 14px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                    <strong style="color: var(--amber); display: block; font-size: 14px; margin-bottom: 4px;">Turns Management</strong>
+                    <p style="font-size: 13px; color: var(--text-muted); margin: 0;">
+                        Every action (warp jump, trade transaction, planetary deposit) consumes turns. Turns regenerate automatically each scheduler tick up to the server maximum (2,500). Plan your trade loops efficiently.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Strategy Archetypes -->
+        <div id="strategies" style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+            <h3 style="color: var(--amber); font-size: 1.2rem; margin-bottom: 12px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px;">
+                2. Commander Archetypes &amp; Strategic Paths
+            </h3>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+                <!-- The Trader -->
+                <div style="background: rgba(30, 41, 59, 0.5); padding: 16px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                    <h4 style="color: var(--cyan); font-size: 15px; margin-bottom: 6px;">The Interstellar Trader</h4>
+                    <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px;">
+                        Focuses entirely on commercial commodity arbitrage between complementary star ports (e.g. buying Ore where cheap and selling to high-demand ports).
+                    </p>
+                    <div style="font-size: 12px; color: var(--text-main);">
+                        <div><strong style="color: var(--emerald);">Key Upgrades:</strong> Hull (holds), Engines (RealSpace speed), Fuel Scoop.</div>
+                        <div style="margin-top: 4px;"><strong style="color: var(--amber);">Strengths:</strong> Rapid credit accumulation from early game.</div>
+                    </div>
+                </div>
+
+                <!-- The Builder -->
+                <div style="background: rgba(30, 41, 59, 0.5); padding: 16px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                    <h4 style="color: var(--emerald); font-size: 15px; margin-bottom: 6px;">The Planetary Builder</h4>
+                    <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px;">
+                        Locates habitable Class-3/4 planets, transports colonists, and balances production between mineral extraction and fighter manufacturing.
+                    </p>
+                    <div style="font-size: 12px; color: var(--text-main);">
+                        <div><strong style="color: var(--emerald);">Key Upgrades:</strong> Large Hulls for colonists, Genesis Torpedoes, Planetary Citadels.</div>
+                        <div style="margin-top: 4px;"><strong style="color: var(--amber);">Strengths:</strong> Unmatched exponential production in late game.</div>
+                    </div>
+                </div>
+
+                <!-- The Banker -->
+                <div style="background: rgba(30, 41, 59, 0.5); padding: 16px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                    <h4 style="color: var(--amber); font-size: 15px; margin-bottom: 6px;">The Galactic Banker</h4>
+                    <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px;">
+                        Deposits vast fortunes into the Intergalactic Bank (IGB) and citadel vaults, letting compound interest per tick fund massive fleet upgrades.
+                    </p>
+                    <div style="font-size: 12px; color: var(--text-main);">
+                        <div><strong style="color: var(--emerald);">Key Strategy:</strong> Compound interest yields + loan leverage for rapid capital bursts.</div>
+                    </div>
+                </div>
+
+                <!-- The Combatant -->
+                <div style="background: rgba(30, 41, 59, 0.5); padding: 16px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                    <h4 style="color: var(--rose); font-size: 15px; margin-bottom: 6px;">The Fleet Commander</h4>
+                    <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px;">
+                        Fortifies chokepoint sectors with minefields and defensive fighter swarms, intercepts rivals, and claims sector territorial sovereignty.
+                    </p>
+                    <div style="font-size: 12px; color: var(--text-main);">
+                        <div><strong style="color: var(--emerald);">Key Upgrades:</strong> Battle Computers, Shields, Beams, Cloaking Array, Mines.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Combat Mechanics -->
+        <div id="combat" style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+            <h3 style="color: var(--rose); font-size: 1.2rem; margin-bottom: 12px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px;">
+                3. Tactical Combat Mechanics
+            </h3>
+            
+            <div style="font-size: 13.5px; line-height: 1.7; color: var(--text-main);">
+                <p>Space battle in BlackNova Traders resolves simultaneously across multiple phases:</p>
+                <ol style="padding-left: 20px; margin: 0 0 16px 0;">
+                    <li><strong>Sensor vs. Cloak Detection:</strong> An attacker must penetrate the defender's cloaking field to lock weapons. Higher Sensors grant offensive lock-on advantage.</li>
+                    <li><strong>Energy Beam Phase:</strong> Beam laser cannons strike deflector shields. Power cores feed shield regeneration.</li>
+                    <li><strong>Fighter Interception Phase:</strong> Attack fighters clash with defensive combat drones. Superior Battle Computer tech allows fielding more simultaneous fighter wings.</li>
+                    <li><strong>Torpedo Warhead Phase:</strong> Heavy torpedo salvos bypass shields to inflict catastrophic structural damage directly against hull armor points.</li>
+                    <li><strong>Emergency Escape:</strong> If a ship sustains lethal damage with an Emergency Warp Device (EWD) equipped, it will automatically warp into random deep space before total destruction.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Planetary Colonization -->
+        <div id="colonization" style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+            <h3 style="color: var(--emerald); font-size: 1.2rem; margin-bottom: 12px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px;">
+                4. Planetary Colonization &amp; Management
+            </h3>
+            
+            <div style="font-size: 13.5px; line-height: 1.7; color: var(--text-main);">
+                <p>Planets are the backbone of galactic empires. Keep these guidelines in mind:</p>
+                <ul style="padding-left: 20px; margin: 0;">
+                    <li><strong>Colonist Population:</strong> Transport colonists from space ports to unowned or newly created planets (via Genesis Torpedoes).</li>
+                    <li><strong>Production Ratios:</strong> Set colonist assignment percentages for Organics (food), Ore, Goods, Energy, Fighters, and Torpedoes.</li>
+                    <li><strong>Citadel Bases:</strong> Constructing a planetary base fortifies defense against bombardment and enables sector ownership claiming.</li>
+                    <li><strong>Citadel Bank:</strong> Planets with bases accumulate interest on deposited credits every scheduler tick.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Intergalactic Banking -->
+        <div id="bank" style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+            <h3 style="color: var(--cyan); font-size: 1.2rem; margin-bottom: 12px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px;">
+                5. Intergalactic Banking (IGB)
+            </h3>
+            
+            <p style="font-size: 13.5px; color: var(--text-main); line-height: 1.7; margin: 0;">
+                The IGB allows commanders to open personal savings accounts accessible from any orbital port. Funds in the IGB are 100% secure from ship destruction, combat losses, and sector raids, while generating periodic compound interest.
+            </p>
+        </div>
+
+        <!-- Frequently Asked Questions -->
+        <div id="qa" style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+            <h3 style="color: var(--cyan); font-size: 1.2rem; margin-bottom: 14px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px;">
+                6. Frequently Asked Questions (Q&amp;A)
+            </h3>
+            
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+                <div style="background: rgba(30, 41, 59, 0.5); padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                    <strong style="color: var(--cyan); display: block; font-size: 13.5px; margin-bottom: 4px;">Q: How do I change my password?</strong>
+                    <div style="font-size: 13px; color: var(--text-muted);">A: Navigate to the <a href="options.php">Options</a> page from the top menu bar to change your account password.</div>
+                </div>
+
+                <div style="background: rgba(30, 41, 59, 0.5); padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                    <strong style="color: var(--cyan); display: block; font-size: 13.5px; margin-bottom: 4px;">Q: What happens if my turns reach zero?</strong>
+                    <div style="font-size: 13px; color: var(--text-muted);">A: Your ship will hold its current sector position until turns are regenerated by the server scheduler tick daemon.</div>
+                </div>
+
+                <div style="background: rgba(30, 41, 59, 0.5); padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                    <strong style="color: var(--cyan); display: block; font-size: 13.5px; margin-bottom: 4px;">Q: How do I form a corporate alliance?</strong>
+                    <div style="font-size: 13px; color: var(--text-muted);">A: Visit the <a href="teams.php">Alliances</a> menu to create a corporation or accept an invitation from an existing fleet.</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div style="text-align: center; margin-top: 24px;">
+        {% if isLogged %}
+            <a href="main.php" class="btn">&laquo; Return to Main Menu</a>
+        {% else %}
+            <a href="index.php">Home</a> |
+            <a href="login.php">Login</a> |
+            <a href="new.php">Create Player</a> |
+            <a href="ranking.php">Rankings</a>
+        {% endif %}
+    </div>
+{% endblock %}

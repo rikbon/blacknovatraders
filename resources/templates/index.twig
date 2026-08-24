@@ -1,0 +1,34 @@
+{% extends "layout.twig" %}
+{% block title %}Welcome to BlackNova Traders{% endblock %}
+{% block content %}
+    <div style="max-width: 720px; margin: 20px auto; text-align: center;">
+        <h1 style="color: var(--cyan); font-size: 1.9rem; margin-bottom: 12px;">Massively Multiplayer Space Exploration &amp; Trading</h1>
+        <p style="color: var(--text-muted); font-size: 15px; line-height: 1.7; margin-bottom: 28px;">
+            Navigate uncharted sectors, build commercial trade routes across orbital star ports, colonize habitable planets, establish corporate alliances, and command defensive battle fleets in an expanding persistent universe.
+        </p>
+
+        <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 32px;">
+            <a href="login.php" class="btn" style="padding: 12px 28px; font-size: 15px; background: linear-gradient(135deg, #0284c7, #0369a1);">
+                Commander Login &raquo;
+            </a>
+            <a href="new.php" class="btn" style="padding: 12px 28px; font-size: 15px; background: linear-gradient(135deg, #059669, #10b981); border-color: rgba(52, 211, 153, 0.4);">
+                + Register New Player
+            </a>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 32px; text-align: left;">
+            <div style="background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+                <h3 style="color: var(--cyan); font-size: 14px; margin-bottom: 6px;">Interstellar Commerce</h3>
+                <p style="font-size: 12.5px; color: var(--text-muted); margin: 0;">Buy and sell commodities across star ports to generate vast fortunes and fund ship upgrades.</p>
+            </div>
+            <div style="background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+                <h3 style="color: var(--emerald); font-size: 14px; margin-bottom: 6px;">Planetary Colonies</h3>
+                <p style="font-size: 12.5px; color: var(--text-muted); margin: 0;">Colonize unowned planets and manage production ratios for organic matter, minerals, and defense forces.</p>
+            </div>
+            <div style="background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+                <h3 style="color: var(--rose); font-size: 14px; margin-bottom: 6px;">Tactical Space Combat</h3>
+                <p style="font-size: 12.5px; color: var(--text-muted); margin: 0;">Fortify sectors with minefields and defensive fighter wings, or execute covert cloaked strikes against rivals.</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

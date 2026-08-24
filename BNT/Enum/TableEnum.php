@@ -20,18 +20,19 @@ enum TableEnum
     public function toDb(): string
     {
         global $dbtables;
+        $prefix = (defined('BNT_DATABASE_PREFIX') ? BNT_DATABASE_PREFIX : (getenv('BNT_DATABASE_PREFIX') ?: 'bnt_'));
 
         return match ($this) {
-            TableEnum::News => $dbtables['news'],
-            TableEnum::Ships => $dbtables['ships'],
-            TableEnum::Traderoutes => $dbtables['traderoutes'],
-            TableEnum::Links => $dbtables['links'],
-            TableEnum::Planets => $dbtables['planets'],
-            TableEnum::Sectors => $dbtables['universe'],
-            TableEnum::Zones => $dbtables['zones'],
-            TableEnum::SectorDefences => $dbtables['sector_defence'],
-            TableEnum::Bounty => $dbtables['bounty'],
-            TableEnum::Logs => $dbtables['logs'],
+            TableEnum::News => $dbtables['news'] ?? ($prefix . 'news'),
+            TableEnum::Ships => $dbtables['ships'] ?? ($prefix . 'ships'),
+            TableEnum::Traderoutes => $dbtables['traderoutes'] ?? ($prefix . 'traderoutes'),
+            TableEnum::Links => $dbtables['links'] ?? ($prefix . 'links'),
+            TableEnum::Planets => $dbtables['planets'] ?? ($prefix . 'planets'),
+            TableEnum::Sectors => $dbtables['universe'] ?? ($prefix . 'universe'),
+            TableEnum::Zones => $dbtables['zones'] ?? ($prefix . 'zones'),
+            TableEnum::SectorDefences => $dbtables['sector_defence'] ?? ($prefix . 'sector_defence'),
+            TableEnum::Bounty => $dbtables['bounty'] ?? ($prefix . 'bounty'),
+            TableEnum::Logs => $dbtables['logs'] ?? ($prefix . 'logs'),
         };
     }
 }

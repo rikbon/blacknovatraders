@@ -1,0 +1,13 @@
+tasks:
+  - url: "https://github.com/rikbon/blacknovatraders.git"
+    task: "Upgrade database configuration for modern MySQL/MariaDB"
+    id: "upgrade-db-config"
+    agent: "agy"
+  - url: "https://github.com/rikbon/blacknovatraders.git"
+    task: "Implement Dockerfile and docker-compose.yml for local development, including local mariadb"
+    id: "add-docker-setup"
+    agent: "claude"
+  - url: "https://github.com/rikbon/blacknovatraders.git"
+    task: "Review architecture"
+    id: "review-architecture"
+    agent: "agy"

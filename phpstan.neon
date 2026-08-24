@@ -1,0 +1,10 @@
+parameters:
+    level: 2
+    paths:
+        - BNT
+    bootstrapFiles:
+        - global_funcs.php
+    treatPhpDocTypesAsCertain: false
+    ignoreErrors:
+        - '#Unsafe usage of new static\(\)#'
+        - '#Function loadlanguage not found#'

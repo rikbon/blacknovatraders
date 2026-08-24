@@ -1,35 +1,62 @@
 {% extends "layout.twig" %}
-{% block title %}{{ tr.l_news_title }}{% endblock %}
+{% block title %}BlackNova Network (BNN) - Interstellar Newsfeed{% endblock %}
 {% block content %}
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 16px;">
+        <div style="display: flex; align-items: center; gap: 16px;">
+            <img src="images/bnnhead.gif" width="220" height="87" alt="The BlackNova Network" style="border-radius: 8px; filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.3));">
+            <div>
+                <h2 style="color: var(--cyan); margin: 0 0 4px 0; font-size: 1.4rem;">BlackNova News Network</h2>
+                <div style="font-size: 12.5px; color: var(--text-muted);">
+                    Galactic News Broadcast &bull; Edition for <strong style="color: #fff;">{{ startdate|date('Y-m-d') }}</strong>
+                </div>
+            </div>
+        </div>
 
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <a href="news.php?startdate={{ previousday|date('Y-m-d') }}" class="btn" style="font-size: 12px; padding: 6px 12px;">
+                &laquo; {{ tr.l_news_prev ?? 'Previous Cycle' }}
+            </a>
+            <a href="news.php?startdate={{ nextday|date('Y-m-d') }}" class="btn" style="font-size: 12px; padding: 6px 12px;">
+                {{ tr.l_news_next ?? 'Next Cycle' }} &raquo;
+            </a>
+        </div>
+    </div>
 
-    <table width="73%" border="0" cellspacing="2" cellpadding="2">
-        <tr>
-            <td height="73" width="27%"><img src="images/bnnhead.gif" width="312" height="123" alt="The BlackNova Network"></td>
-            <td height="73" width="73%" bgcolor="#000000" valign="bottom" align="right">
-                <p><font size="-1">{{ tr.l_news_info }}</font></p>
-                <p>{{ tr.l_news_for }} {{ startdate|date('Y-m-d') }}</p>
-            </td>
-        </tr>
-        <tr>
-            <td height="22" width="27%" bgcolor="#00001A">&nbsp;</td>
-            <td height="22" width="73%" bgcolor="#00001A" align="right">
-                <a href="news2.php?startdate={{ previousday|date('Y-m-d') }}">{{ tr.l_news_prev }}</a> - <a href="news2.php?startdate={{  nextday|date('Y-m-d') }}">{{ tr.l_news_next }}</a>
-            </td>
-        </tr>
+    <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px;">
         {% if news is empty %}
-            <tr>
-                <td bgcolor="#00001A" align="center">{{ tr.l_news_flash }}</td><td bgcolor="#00001A" align="right">{{ tr.l_news_none }}</td>
-            </tr>
+            <div style="background: rgba(15, 23, 42, 0.6); padding: 32px; border-radius: 10px; border: 1px solid var(--border-subtle); text-align: center;">
+                <div style="font-size: 1.2rem; color: var(--cyan); margin-bottom: 8px;">No High-Priority Incidents Reported</div>
+                <p style="color: var(--text-muted); font-size: 13.5px; max-width: 500px; margin: 0 auto;">
+                    {{ tr.l_news_none ?? 'No major space battles, planetary conquests, or corporate disputes were recorded across known sectors during this cycle.' }}
+                </p>
+            </div>
         {% else %}
             {% for newsItem in news %}
-                <tr>
-                    <td bgcolor="#000033" align="center">{{ newsItem.headline }}</td>
-                    <td bgcolor="#000033">
-                        <p align="justify">{{ newsItem.newstext }}</p><br>
-                    </td>
-                </tr>
+                <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 16px 20px; transition: transform 0.15s ease;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+                        <span style="font-weight: bold; color: var(--cyan); font-size: 1.1rem;">
+                            {{ newsItem.headline }}
+                        </span>
+                        <span class="badge badge-amber" style="font-size: 11px;">
+                            {{ newsItem.news_type|default('Galactic Incident')|upper }}
+                        </span>
+                    </div>
+                    <div style="color: var(--text-main); font-size: 14px; line-height: 1.6;">
+                        {{ newsItem.newstext|raw }}
+                    </div>
+                </div>
             {% endfor %}
         {% endif %}
-    </table>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+        {% if isLogged %}
+            <a href="main.php" class="btn">&laquo; Return to Main Menu</a>
+        {% else %}
+            <a href="index.php">Home</a> |
+            <a href="login.php">Login</a> |
+            <a href="new.php">Create Player</a> |
+            <a href="ranking.php">Rankings</a>
+        {% endif %}
+    </div>
 {% endblock %}

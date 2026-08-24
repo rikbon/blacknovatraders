@@ -18,7 +18,7 @@ class ShipMoveServant extends Servant
     public Ship $ship;
     public SectorDefenceAttackFightersServant $checkFighters;
     public int $sector;
-    public protected(set) array $links = [];
+    public array $links = [];
 
     public function serve(): void
     {

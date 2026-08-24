@@ -40,7 +40,7 @@ use BNT\Enum\BalanceEnum;
  * Patched by TMD [TheMightyDude]
  */
 
-class PlanetChangeProductionServitor implements ServantInterface
+class PlanetChangeProductionServitor extends Servant
 {
 
     public Ship $ship;

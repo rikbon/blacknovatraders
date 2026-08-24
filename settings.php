@@ -1,134 +1,47 @@
-<? 
+<?php
 
-include("config.php");
+declare(strict_types=1);
+
+require_once './config.php';
+
+if (empty($lang)) {
+    $lang = $default_lang;
+}
 loadlanguage($lang);
 
-$title="Game Settings";
-include("header.php");
+$rate = 1 / ($colonist_production_rate > 0 ? $colonist_production_rate : 1);
 
-
-bigtitle();
-
-//-------------------------------------------------------------------------------------------------
-$line_color = $color_line1;
-
-function line($item, $value)
-{
-  global $line_color, $color_line1, $color_line2;
-  
-  echo "<TR BGCOLOR=\"$line_color\"><TD>$item</TD><TD>$value</TD></TR>\n";
-  if($line_color == $color_line1)
-  { 
-    $line_color = $color_line2; 
-  }
-  else
-  { 
-    $line_color = $color_line1; 
-  }
-}
-
-  
-  echo "<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=2>";
-   line("Game version:",$release_version);
-   line("Game name:",$game_name);
-   line("Average tech level needed to hit mines",$mine_hullsize);
-   line("Averaged Tech level When Emergency Warp Degrades",$ewd_maxhullsize);
-   
-   $num = NUMBER($sector_max);
-   line("Number of Sectors",$num);
-   line("Maximum Links per sector",$link_max);
-   line("Maximum average tech level for Federation Sectors",$fed_max_hull);
-   
-   $bank_enabled = $allow_ibank ? "Yes" : "No";
-   line("Intergalactic Bank Enabled",$bank_enabled);
-   
-   if($allow_ibank)
-   {
-     $rate = $ibank_interest * 100;
-     line("IGB Interest rate per update",$rate);
-     $rate = $ibank_loaninterest * 100;
-     line("IGB Loan rate per update",$rate);
-   }  
-   line("Tech Level upgrade for Bases",$basedefense);
-   
-   $num = NUMBER($colonist_limit);
-   line("Colonists Limit",$num."&nbsp;");
-   
-   $num = NUMBER($max_turns);
-   line("Maximum number of accumulated turns",$num);
-   line("Maximum number of planets per sector",$max_planets_sector);
-   line("Maximum number of traderoutes per player",$max_traderoutes_player);
-   line("Colonist Production Rate",$colonist_production_rate);
-   line("Unit of Energy used per sector fighter",$energy_per_fighter);
-   
-   $rate = $defence_degrade_rate * 100;
-   line("Sector fighter degradation percentage rate",$rate);
-   line("Number of planets with bases need for sector ownership&nbsp;",$min_bases_to_own);
-   
-   $rate = NUMBER(($interest_rate - 1) * 100 , 3);
-   line("Planet interest rate",$rate);
-   
-   $rate = 1 / $colonist_production_rate;
-   
-   $num = NUMBER($rate/$fighter_prate);
-   line("Colonists needed to produce 1 Fighter each turn",$num);
-   
-   $num = NUMBER($rate/$torpedo_prate);
-   line("Colonists needed to produce 1 Torpedo each turn",$num);
-   
-   $num = NUMBER($rate/$ore_prate);
-   line("Colonists needed to produce 1 Ore each turn",$num);
-   
-   $num = NUMBER($rate/$organics_prate);
-   line("Colonists needed to produce 1 Organics each turn",$num);
-   
-   $num = NUMBER($rate/$goods_prate);
-   line("Colonists needed to produce 1 Goods each turn",$num);
-   
-   $num = NUMBER($rate/$energy_prate);
-   line("Colonists needed to produce 1 Energy each turn",$num);
-   
-   $num = NUMBER($rate/$credits_prate);
-   line("Colonists needed to produce 1 Credits each turn",$num);
-  echo "</TABLE><BR><BR>\n";
-
-
-$title="Game Scheduler Settings";
-bigtitle();
- 
-  $line_color = $color_line1;
-  
-  echo "<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=2>";
-   line("Ticks happen every",$sched_ticks ." minutes&nbsp;");
-   line("Turns will happen every",$sched_turns ." minutes&nbsp;");
-   line("Defenses will be checked every",$sched_turns ." minutes&nbsp;");
-   line("Xenobes will play every",$sched_turns ." minutes&nbsp;");  
-   
-   if($allow_ibank)
-     line("Interests on IGB accounts will be accumulated every&nbsp;", $sched_igb ." minutes&nbsp;");
-   
-   line("News will be generated every",$sched_news ." minutes&nbsp;");
-   line("Planets will generate production every",$sched_planets ." minutes&nbsp;");
-   line("Ports will regenerate every",$sched_ports ." minutes&nbsp;");
-   line("Ships will be towed from fed sectors every",$sched_turns ." minutes&nbsp;");
-   line("Rankings will be generated every",$sched_ranking ." minutes&nbsp;");
-   line("Sector Defences will degrade every",$sched_degrade ." minutes&nbsp;");
-   line("The planetary apocalypse will occur every&nbsp;",$sched_apocalypse ." minutes&nbsp;");
-
-  echo "</TABLE>";
-
-
-echo "<BR><BR>";
-
-if(empty($username))
-{
-  TEXT_GOTOLOGIN();
-}
-else
-{
-  TEXT_GOTOMAIN();
-}
-
-include("footer.php");
-
-?>
+echo twig()->render('settings.twig', [
+    'game_name' => $game_name,
+    'release_version' => $release_version,
+    'sector_max' => number_format((float)$sector_max),
+    'link_max' => $link_max,
+    'max_turns' => number_format((float)$max_turns),
+    'max_planets_sector' => $max_planets_sector,
+    'max_traderoutes_player' => $max_traderoutes_player,
+    'fed_max_hull' => $fed_max_hull,
+    'min_bases_to_own' => $min_bases_to_own,
+    'mine_hullsize' => $mine_hullsize,
+    'ewd_maxhullsize' => $ewd_maxhullsize,
+    'energy_per_fighter' => $energy_per_fighter,
+    'defence_degrade_rate' => ($defence_degrade_rate * 100),
+    'basedefense' => $basedefense,
+    'allow_ibank' => (bool)$allow_ibank,
+    'ibank_interest' => number_format((float)($ibank_interest * 100), 2),
+    'ibank_loaninterest' => number_format((float)($ibank_loaninterest * 100), 2),
+    'planet_interest_rate' => number_format((float)(($interest_rate - 1) * 100), 2),
+    'colonists_per_ore' => number_format((float)($rate / ($ore_prate > 0 ? $ore_prate : 1))),
+    'colonists_per_organics' => number_format((float)($rate / ($organics_prate > 0 ? $organics_prate : 1))),
+    'colonists_per_goods' => number_format((float)($rate / ($goods_prate > 0 ? $goods_prate : 1))),
+    'colonists_per_energy' => number_format((float)($rate / ($energy_prate > 0 ? $energy_prate : 1))),
+    'colonists_per_credits' => number_format((float)($rate / ($credits_prate > 0 ? $credits_prate : 1))),
+    'colonists_per_fighter' => number_format((float)($rate / ($fighter_prate > 0 ? $fighter_prate : 1))),
+    'colonists_per_torpedo' => number_format((float)($rate / ($torpedo_prate > 0 ? $torpedo_prate : 1))),
+    'sched_ticks' => $sched_ticks,
+    'sched_turns' => $sched_turns,
+    'sched_ports' => $sched_ports,
+    'sched_planets' => $sched_planets,
+    'sched_ranking' => $sched_ranking,
+    'sched_degrade' => $sched_degrade,
+    'sched_apocalypse' => $sched_apocalypse,
+]);

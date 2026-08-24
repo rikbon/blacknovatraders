@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace BNT\News\Mapper;
 
 use BNT\News\Entity\News;
+use BNT\Mapper;
 
-class NewsMapper implements \BNT\ServantInterface
+class NewsMapper extends Mapper
 {
     public array $row;
     public ?News $news = null;

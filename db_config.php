@@ -27,7 +27,7 @@ $gamepath = "/";
 
 // Hostname and port of the database server:
 // These are defaults, you normally won't have to change them
-$dbhost = getenv('BNT_DATABASE_HOST') ?: 'mysql';
+$dbhost = getenv('BNT_DATABASE_HOST') ?: 'db';
 
 // Note : if you do not know the port, set this to "" for default. Ex, MySQL default is 3306
 $dbport = getenv('BNT_DATABASE_PORT') ?: '3306';
@@ -53,7 +53,7 @@ $db_persistent = 0;
 one game of BNT on the same database, or if the current table
 names conflict with tables you already have in your db, you will
 need to change this */
-$db_prefix = getenv('BNT_DATABASE_PREFIX') ?: (getenv('BNT_DATABASE_RREFIX') ?: 'bnt_');
+$db_prefix = getenv('BNT_DATABASE_PREFIX') ?: 'bnt_';
 
 // Character set for the database connection:
 $db_charset = getenv('BNT_DATABASE_CHARSET') ?: 'utf8mb4';

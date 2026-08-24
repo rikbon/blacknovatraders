@@ -36,22 +36,24 @@ class TraderouteView
     {
         global $l_port;
         global $l_defense;
+        global $container;
 
         return match ($this->traderoute->source_type) {
-            TraderouteTypeEnum::Port => $l_port,
-            TraderouteTypeEnum::Defense => $l_defense,
-            TraderouteTypeEnum::Personal, TraderouteTypeEnum::Corperate => (new PlanetView(PlanetRetrieveByIdDAO::call($this->container, $this->traderoute->source_id)))->name(),
+            TraderouteTypeEnum::Port => (string)$l_port,
+            TraderouteTypeEnum::Defense => (string)$l_defense,
+            TraderouteTypeEnum::Personal, TraderouteTypeEnum::Corperate => (new PlanetView(PlanetRetrieveByIdDAO::call($container, $this->traderoute->source_id)))->name(),
         };
     }
 
     public function dst(): string
     {
         global $l_defense;
+        global $container;
 
         return match ($this->traderoute->dest_type) {
             TraderouteTypeEnum::Port => strval($this->traderoute->dest_id),
             TraderouteTypeEnum::Defense => sprintf('%s [%s]', $l_defense, $this->traderoute->dest_id),
-            TraderouteTypeEnum::Personal, BNT\Traderoute\TraderouteTypeEnum::Corperate => (new PlanetView(PlanetRetrieveByIdDAO::call($this->container, $this->traderoute->dest_id)))->name(),
+            TraderouteTypeEnum::Personal, TraderouteTypeEnum::Corperate => (new PlanetView(PlanetRetrieveByIdDAO::call($container, $this->traderoute->dest_id)))->name(),
         };
     }
 

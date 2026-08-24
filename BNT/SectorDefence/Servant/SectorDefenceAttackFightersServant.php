@@ -22,7 +22,7 @@ class SectorDefenceAttackFightersServant extends Servant
     //
     public int $totalSectorFightes = 0;
     public int $fightersToll = 0;
-    public protected(set) bool $hasEnemy = false;
+    public bool $hasEnemy = false;
     public ?Ship $fightersOwner = null;
     public ?SectorDefence $fightersDefence = null;
 

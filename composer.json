@@ -19,5 +19,14 @@
     },
     "config": {
         "sort-packages": true
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "BNT\\Test\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.10",
+        "phpunit/phpunit": "^10.5"
     }
 }

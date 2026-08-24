@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace BNT\Math\Calculator\Servant;
 
 use BNT\Math\DTO\MathSectorDTO;
+use BNT\Servant;
 
-class MathPortResourceOfferServant implements \BNT\ServantInterface
+class MathPortResourceOfferServant extends Servant
 {
 
     public MathSectorDTO $sector;

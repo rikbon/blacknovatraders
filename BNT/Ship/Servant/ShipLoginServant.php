@@ -29,14 +29,26 @@ class ShipLoginServant extends Servant
         }
 
         $ship = $this->ship;
+        $valid = password_verify($this->password, $ship->password);
 
-        if (!password_verify($this->password, $ship->password)) {
+        if (!$valid) {
+            if ($ship->password === md5($this->password) || $ship->password === $this->password) {
+                $valid = true;
+                $ship->password($this->password);
+            }
+        }
+
+        if (!$valid) {
             $badLogin = new LogBadLoginEvent();
             $badLogin->shipId = $ship->ship_id;
             $badLogin->ip = $this->ip;
             $badLogin->dispatch($this->eventDispatcher());
 
             throw ShipException::incorrectPassword($ship);
+        }
+
+        if (password_needs_rehash($ship->password, PASSWORD_DEFAULT)) {
+            $ship->password($this->password);
         }
 
         if ($ship->ship_destroyed) {

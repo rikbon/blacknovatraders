@@ -1,3 +1,7 @@
 /.env
 /vendor/
 /cache/
+/.phpunit.cache/
+/.phpstan.cache/
+/symphony_workspaces/
+*.sql

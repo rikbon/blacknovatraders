@@ -18,9 +18,9 @@ class MathDefenceCalculateFightersMediator extends \BNT\Mediator
      */
     public array $defences;
     public Ship $ship;
-    public protected(set) int $totalFighters = 0;
-    public protected(set) int $fightersToll = 0;
-    public protected(set) bool $hasEmenyFighters = false;
+    public int $totalFighters = 0;
+    public int $fightersToll = 0;
+    public bool $hasEmenyFighters = false;
 
     #[\Override]
     public function serve(): void
@@ -45,7 +45,7 @@ class MathDefenceCalculateFightersMediator extends \BNT\Mediator
         $calculate->defences = $mathCalcDefences;
         $calculate->serve();
 
-        $this->totalFightes = $calculate->totalFighters;
+        $this->totalFighters = $calculate->totalFighters;
         $this->fightersToll = $calculate->fightersToll;
         $this->hasEmenyFighters = $calculate->hasEmenyFighters;
     }

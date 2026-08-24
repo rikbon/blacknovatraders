@@ -1,0 +1,150 @@
+{% extends "layout.twig" %}
+{% block title %}Game Settings &amp; Configuration{% endblock %}
+{% block content %}
+    <div style="margin-bottom: 24px;">
+        <h2 style="color: var(--cyan); margin-bottom: 6px;">Galactic Universe Settings</h2>
+        <p style="color: var(--text-muted); font-size: 13.5px; margin: 0;">
+            Active universe parameters, economic balancing factors, planetary production formulas, and scheduler intervals for <strong>{{ game_name }}</strong> (Version {{ release_version }}).
+        </p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 24px;">
+        
+        <!-- Universe & Navigation -->
+        <div style="background: rgba(15, 23, 42, 0.6); padding: 18px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+            <h3 style="color: var(--cyan); font-size: 1.1rem; margin-bottom: 14px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px;">
+                Universe &amp; Space Flight
+            </h3>
+            <table>
+                <tbody>
+                    <tr><td style="color: var(--text-muted);">Total Sectors</td><td style="text-align: right; font-weight: bold; color: #fff;">{{ sector_max }}</td></tr>
+                    <tr><td style="color: var(--text-muted);">Max Links per Sector</td><td style="text-align: right; color: var(--cyan);">{{ link_max }}</td></tr>
+                    <tr><td style="color: var(--text-muted);">Max Accumulated Turns</td><td style="text-align: right; font-weight: bold; color: var(--emerald);">{{ max_turns }}</td></tr>
+                    <tr><td style="color: var(--text-muted);">Max Planets per Sector</td><td style="text-align: right;">{{ max_planets_sector }}</td></tr>
+                    <tr><td style="color: var(--text-muted);">Max Trade Routes per Player</td><td style="text-align: right;">{{ max_traderoutes_player }}</td></tr>
+                    <tr><td style="color: var(--text-muted);">Federation Max Hull Level</td><td style="text-align: right; color: var(--amber);">Level {{ fed_max_hull }}</td></tr>
+                    <tr><td style="color: var(--text-muted);">Bases Needed for Sector Ownership</td><td style="text-align: right;">{{ min_bases_to_own }} base(s)</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Combat & Defense -->
+        <div style="background: rgba(15, 23, 42, 0.6); padding: 18px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+            <h3 style="color: var(--rose); font-size: 1.1rem; margin-bottom: 14px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px;">
+                Combat &amp; Tactical Defenses
+            </h3>
+            <table>
+                <tbody>
+                    <tr><td style="color: var(--text-muted);">Tech Level Needed to Hit Mines</td><td style="text-align: right;">Level {{ mine_hullsize }}</td></tr>
+                    <tr><td style="color: var(--text-muted);">Emergency Warp Degradation Tech</td><td style="text-align: right;">Level {{ ewd_maxhullsize }}</td></tr>
+                    <tr><td style="color: var(--text-muted);">Energy Consumed per Sector Fighter</td><td style="text-align: right;">{{ energy_per_fighter }} unit(s)</td></tr>
+                    <tr><td style="color: var(--text-muted);">Sector Fighter Degradation Rate</td><td style="text-align: right; color: var(--rose);">{{ defence_degrade_rate }}%</td></tr>
+                    <tr><td style="color: var(--text-muted);">Planetary Base Defense Factor</td><td style="text-align: right; color: var(--cyan);">{{ basedefense }}x</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Banking & Finance -->
+        <div style="background: rgba(15, 23, 42, 0.6); padding: 18px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+            <h3 style="color: var(--emerald); font-size: 1.1rem; margin-bottom: 14px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px;">
+                Intergalactic Banking (IGB)
+            </h3>
+            <table>
+                <tbody>
+                    <tr><td style="color: var(--text-muted);">IGB Bank Service</td><td style="text-align: right;"><span class="badge {{ allow_ibank ? 'badge-emerald' : 'badge-amber' }}">{{ allow_ibank ? 'Enabled' : 'Disabled' }}</span></td></tr>
+                    {% if allow_ibank %}
+                        <tr><td style="color: var(--text-muted);">Savings Deposit Interest Rate</td><td style="text-align: right; color: var(--emerald);">+{{ ibank_interest }}% / tick</td></tr>
+                        <tr><td style="color: var(--text-muted);">Loan Borrowing Interest Rate</td><td style="text-align: right; color: var(--rose);">{{ ibank_loaninterest }}% / tick</td></tr>
+                    {% endif %}
+                    <tr><td style="color: var(--text-muted);">Planet Citadel Interest Rate</td><td style="text-align: right; color: var(--emerald);">+{{ planet_interest_rate }}%</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <!-- Planetary Colony Production Formulas -->
+    <div style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 10px; border: 1px solid var(--border-subtle); margin-bottom: 24px;">
+        <h3 style="color: var(--amber); font-size: 1.15rem; margin-bottom: 14px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px;">
+            Planetary Colony Productivity Formulas
+        </h3>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+            Number of working colonists required on a colony planet to produce 1 unit of each resource or military asset per universe turn:
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;">
+            <div style="background: rgba(30, 41, 59, 0.6); padding: 12px; border-radius: 8px; text-align: center; border: 1px solid var(--border-subtle);">
+                <div style="color: var(--text-muted); font-size: 12px; margin-bottom: 4px;"><img src="images/ore.gif" align="absmiddle"> 1 Ore</div>
+                <div style="font-size: 1.2rem; font-weight: bold; color: var(--amber);">{{ colonists_per_ore }}</div>
+                <div style="font-size: 11px; color: var(--text-muted);">Colonists</div>
+            </div>
+            <div style="background: rgba(30, 41, 59, 0.6); padding: 12px; border-radius: 8px; text-align: center; border: 1px solid var(--border-subtle);">
+                <div style="color: var(--text-muted); font-size: 12px; margin-bottom: 4px;"><img src="images/organics.gif" align="absmiddle"> 1 Organics</div>
+                <div style="font-size: 1.2rem; font-weight: bold; color: var(--emerald);">{{ colonists_per_organics }}</div>
+                <div style="font-size: 11px; color: var(--text-muted);">Colonists</div>
+            </div>
+            <div style="background: rgba(30, 41, 59, 0.6); padding: 12px; border-radius: 8px; text-align: center; border: 1px solid var(--border-subtle);">
+                <div style="color: var(--text-muted); font-size: 12px; margin-bottom: 4px;"><img src="images/goods.gif" align="absmiddle"> 1 Goods</div>
+                <div style="font-size: 1.2rem; font-weight: bold; color: var(--cyan);">{{ colonists_per_goods }}</div>
+                <div style="font-size: 11px; color: var(--text-muted);">Colonists</div>
+            </div>
+            <div style="background: rgba(30, 41, 59, 0.6); padding: 12px; border-radius: 8px; text-align: center; border: 1px solid var(--border-subtle);">
+                <div style="color: var(--text-muted); font-size: 12px; margin-bottom: 4px;"><img src="images/energy.gif" align="absmiddle"> 1 Energy</div>
+                <div style="font-size: 1.2rem; font-weight: bold; color: #fff;">{{ colonists_per_energy }}</div>
+                <div style="font-size: 11px; color: var(--text-muted);">Colonists</div>
+            </div>
+            <div style="background: rgba(30, 41, 59, 0.6); padding: 12px; border-radius: 8px; text-align: center; border: 1px solid var(--border-subtle);">
+                <div style="color: var(--text-muted); font-size: 12px; margin-bottom: 4px;"><img src="images/credits.gif" align="absmiddle"> 1 Credit</div>
+                <div style="font-size: 1.2rem; font-weight: bold; color: #34d399;">{{ colonists_per_credits }}</div>
+                <div style="font-size: 11px; color: var(--text-muted);">Colonists</div>
+            </div>
+            <div style="background: rgba(30, 41, 59, 0.6); padding: 12px; border-radius: 8px; text-align: center; border: 1px solid var(--border-subtle);">
+                <div style="color: var(--text-muted); font-size: 12px; margin-bottom: 4px;"><img src="images/fighters.gif" align="absmiddle"> 1 Fighter</div>
+                <div style="font-size: 1.2rem; font-weight: bold; color: var(--rose);">{{ colonists_per_fighter }}</div>
+                <div style="font-size: 11px; color: var(--text-muted);">Colonists</div>
+            </div>
+            <div style="background: rgba(30, 41, 59, 0.6); padding: 12px; border-radius: 8px; text-align: center; border: 1px solid var(--border-subtle);">
+                <div style="color: var(--text-muted); font-size: 12px; margin-bottom: 4px;">1 Torpedo</div>
+                <div style="font-size: 1.2rem; font-weight: bold; color: var(--amber);">{{ colonists_per_torpedo }}</div>
+                <div style="font-size: 11px; color: var(--text-muted);">Colonists</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Universe Scheduler Intervals -->
+    <div style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 10px; border: 1px solid var(--border-subtle); margin-bottom: 24px;">
+        <h3 style="color: var(--cyan); font-size: 1.15rem; margin-bottom: 14px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px;">
+            Universe Tick Engine &amp; Scheduler Intervals
+        </h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+            <table>
+                <tbody>
+                    <tr><td style="color: var(--text-muted);">Main Game Loop Ticks</td><td style="text-align: right; color: var(--cyan); font-weight: bold;">Every {{ sched_ticks }} min</td></tr>
+                    <tr><td style="color: var(--text-muted);">Player Turn Allocation</td><td style="text-align: right; color: var(--emerald);">Every {{ sched_turns }} min</td></tr>
+                    <tr><td style="color: var(--text-muted);">Orbital Port Regeneration</td><td style="text-align: right;">Every {{ sched_ports }} min</td></tr>
+                    <tr><td style="color: var(--text-muted);">Planetary Production Cycle</td><td style="text-align: right;">Every {{ sched_planets }} min</td></tr>
+                </tbody>
+            </table>
+            <table>
+                <tbody>
+                    <tr><td style="color: var(--text-muted);">Galactic Rankings Recalculation</td><td style="text-align: right; color: var(--amber);">Every {{ sched_ranking }} min</td></tr>
+                    <tr><td style="color: var(--text-muted);">Sector Defense Degradation</td><td style="text-align: right;">Every {{ sched_degrade }} min</td></tr>
+                    <tr><td style="color: var(--text-muted);">Alien AI Faction Moves (Xenobes)</td><td style="text-align: right;">Every {{ sched_turns }} min</td></tr>
+                    <tr><td style="color: var(--text-muted);">Planetary Apocalypse Event Check</td><td style="text-align: right; color: var(--rose);">Every {{ sched_apocalypse }} min</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+        {% if isLogged %}
+            <a href="main.php" class="btn">&laquo; Return to Main Menu</a>
+        {% else %}
+            <a href="index.php">Home</a> |
+            <a href="login.php">Login</a> |
+            <a href="new.php">Create Player</a> |
+            <a href="ranking.php">Rankings</a>
+        {% endif %}
+    </div>
+{% endblock %}

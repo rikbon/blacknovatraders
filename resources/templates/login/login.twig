@@ -1,39 +1,38 @@
 {% extends "layout.twig" %}
 {% block title %}{{ tr.l_login_title }}{% endblock %}
 {% block content %}
-    <form action="login2.php" method="post">
-        <TABLE CELLPADDING="4">
-            <TR>
-                <TD align="right">{{  tr.l_login_email }}</TD>
-                <TD align="left"><INPUT TYPE="TEXT" NAME="email" SIZE="20" MAXLENGTH="40" VALUE=""/></TD>
-            </TR>
-            <TR>
-                <TD align="right">{{  tr.l_login_pw }}</TD>
-                <TD align="left"><INPUT TYPE="PASSWORD" NAME="pass" SIZE="20" MAXLENGTH="20" VALUE=""/></TD>
-            </TR>
-            <TR>
-                <TD colspan="2">
-                    Forgot your password?  Enter it blank and press login.
-                </TD>
-            </TR>
-            <TR>
-                <TD colspan=2>
-                    <INPUT TYPE="SUBMIT" VALUE="{{ tr.l_login_title }}">
-                </TD>
-            </TR>
-            <TR>
-                <TD colspan=2>
-                    {{ tr.l_login_newp }}<br/>
-                    {{ tr.l_login_prbs }} <A HREF="mailto:{{  admin_mail }}">{{ tr.l_login_emailus }}</A>
-                </TD>
-            </TR>
-            <TR>
-                <TD colspan=2>
-                    {% if link_forums %}<A HREF="{{  link_forums }}" TARGET="_blank">{{  tr.l_forums }}</A> -{% endif %}
-                    <A HREF="ranking.php">{{ tr.l_rankings }}</A> -
-                    <A HREF="settings.php">{{ tr.l_login_settings }}</A>
-                </TD>
-            </TR>
-        </TABLE>
-    </FORM>
+    <div style="max-width: 480px; margin: 20px auto; padding: 20px 10px;">
+        <h2 style="text-align: center; color: var(--cyan); margin-bottom: 24px;">{{ tr.l_login_title }}</h2>
+        
+        <form action="login2.php" method="post">
+            <div style="margin-bottom: 16px;">
+                <label style="display: block; margin-bottom: 6px; font-weight: 500; font-size: 13.5px; color: var(--text-muted);">{{ tr.l_login_email }}</label>
+                <input type="text" name="email" size="20" maxlength="40" value="" style="width: 100%; padding: 10px 14px;" placeholder="player@example.com" autofocus required />
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <label style="display: block; margin-bottom: 6px; font-weight: 500; font-size: 13.5px; color: var(--text-muted);">{{ tr.l_login_pw }}</label>
+                <input type="password" name="pass" size="20" maxlength="20" value="" style="width: 100%; padding: 10px 14px;" placeholder="••••••••" required />
+            </div>
+
+            <div style="margin-bottom: 20px; font-size: 12px; color: var(--text-muted); text-align: right;">
+                Forgot password? Enter email with empty password and click Login.
+            </div>
+
+            <div style="text-align: center; margin-bottom: 24px;">
+                <input type="submit" value="Authenticate &amp; Enter Universe" style="width: 100%; padding: 12px; font-size: 15px;" />
+            </div>
+
+            <div style="text-align: center; padding: 16px 0; border-top: 1px solid var(--border-subtle); margin-top: 20px;">
+                <div style="margin-bottom: 12px;">
+                    <a href="new.php" class="btn" style="display: inline-block; background: linear-gradient(135deg, #059669, #10b981); border-color: rgba(52, 211, 153, 0.4); text-align: center;">
+                        + Create New Player Account
+                    </a>
+                </div>
+                <div style="font-size: 12.5px; color: var(--text-muted);">
+                    {{ tr.l_login_prbs }} <a href="mailto:{{ admin_mail }}">{{ tr.l_login_emailus }}</a>
+                </div>
+            </div>
+        </form>
+    </div>
 {% endblock %}

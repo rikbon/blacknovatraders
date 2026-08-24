@@ -1,348 +1,274 @@
 {% extends "layout.twig" %}
 {% block title %}{{ tr.l_main_title }}{% endblock %}
 {% block content %}
-    <table style="width: 900px;margin: 0 auto 0 auto;">
-        <tr>
-            <td>
-                <a href="report.php">{{ playerinfo.name() }}</a> ({{ playerinfo.character() }}) [{{ playerinfo.rank() }}] [{{ playerinfo.team() }}]
-            </td>
-            <td>
-                {{ tr.l_turns_have }}
-                {{ playerinfo.turns() }}
-            </td>
-            <td align=center>
-                {{ tr.l_turns_used }} {{ playerinfo.turnsUsed() }}
-            </td>
-            <td align=right>
-                {{ tr.l_score }} {{ playerinfo.score() }}
-            </td>
-        </tr>
-        <tr class="page_break">
-            <td></td>
-        </tr>
-    </table>
-    <table>
-        <tr>
-            <td>
-                <table>
-                    <tr>
-                        <td>
-                            {{ tr.l_sector }}: {{ playerinfo.sector() }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td nowrap>
-                            {{ sectorinfo.beacon }}
-                            {{ zoneinfo.zone_name }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="zoneinfo.php?zone={{ zoneinfo.zone_id }}">{{ zoneinfo.zone_name }}</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            ----
-                        </td>
-                    </tr>
-                    <tr>
-                        <td >
-                            {{ tr.l_traderoutes }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div>
-                                {% if not traderoutes %}
-                                    <a >{{ tr.l_none }} </a>
-                                {% else %}
-                                    {% for traderoute in traderoutes %}
-                                        <a href="traderoute.php?engage={{ traderoute.id() }}">
-                                            {{ traderoute.src() }} {{ traderoute.direction() }} {{ traderoute.dst() }}
-                                        </a>
-                                        <br>
-                                    {% endfor %}
-                                {% endif %}
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td nowrap>
-                            <div >
-                                <a  href=traderoute.php>{{ tr.l_trade_control }}</a><br>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-            <td style="width: 60%;">
-                {% if sectorinfo.isPort() %}
-                    <table>
-                        <tr>
-                            <td>
-                                <a href="port.php">
-                                    <table>
-                                        <tr>
-                                            <td rowspan="2">
-                                                <div class="space_station_port"></div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table>
-                                                    <tr>
-                                                        <td>{{ tr.l_tradingport }}: {{ sectorinfo.portTypeName()|capitalize }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><img  src="images/ore.gif"> {{ tr.l_ore }}</td>
-                                                        <td>{{ sectorinfo.ore() }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><img  src="images/organics.gif"> {{ tr.l_organics }}</td>
-                                                        <td>{{ sectorinfo.organics() }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><img  src="images/goods.gif"> {{ tr.l_goods }}</td>
-                                                        <td>{{ sectorinfo.goods() }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><img   src="images/energy.gif"> {{ tr.l_energy }}</td> 
-                                                        <td>{{ sectorinfo.energy() }}</td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </a>
-                            </td>
-                        </tr>
-                    </table>
-                {% else %}
-                    <table>
-                        <tr>
-                            <td>
-                                <table>
-                                    <tr>
-                                        <td rowspan="2">
-                                            <div class="space_station"></div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
+    <!-- Commander Status Banner -->
+    <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 14px 20px; margin-bottom: 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 1.15rem; font-weight: bold; color: var(--cyan);">
+                <a href="report.php" style="color: var(--cyan); text-decoration: underline;">{{ playerinfo.name() }}</a>
+            </span>
+            <span style="color: var(--text-muted); font-size: 13.5px;">({{ playerinfo.character() }})</span>
+            <span class="badge badge-cyan">{{ playerinfo.rank() }}</span>
+            {% if playerinfo.team() %}
+                <span class="badge badge-amber">{{ playerinfo.team() }}</span>
+            {% endif %}
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px; font-size: 13.5px;">
+            <div>
+                <span style="color: var(--text-muted);">{{ tr.l_turns_have }}:</span>
+                <span class="badge badge-emerald" style="font-size: 13px;">{{ playerinfo.turns() }}</span>
+            </div>
+            <div>
+                <span style="color: var(--text-muted);">{{ tr.l_turns_used }}:</span>
+                <span style="color: var(--amber); font-weight: 600;">{{ playerinfo.turnsUsed() }}</span>
+            </div>
+            <div>
+                <span style="color: var(--text-muted);">{{ tr.l_score }}:</span>
+                <span style="color: var(--cyan); font-weight: 600;">{{ playerinfo.score() }}</span>
+            </div>
+            <div>
+                <span style="color: var(--text-muted);">Credits:</span>
+                <span style="color: #34d399; font-weight: bold;">{{ playerinfo.credits() }} C</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Bridge Grid -->
+    <div style="display: grid; grid-template-columns: 260px 1fr 280px; gap: 20px;">
+        
+        <!-- Left Column: Sector & Trade Routes -->
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div style="background: rgba(15, 23, 42, 0.6); padding: 14px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+                <h3 style="font-size: 13px; text-transform: uppercase; color: var(--cyan); margin-bottom: 10px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 6px;">
+                    Navigation Sensor
+                </h3>
+                <div style="margin-bottom: 8px;">
+                    <span style="color: var(--text-muted); font-size: 13px;">{{ tr.l_sector }}:</span>
+                    <strong style="font-size: 1.2rem; color: #fff; margin-left: 4px;">{{ playerinfo.sector() }}</strong>
+                </div>
+                {% if sectorinfo.beacon %}
+                    <div style="font-size: 12px; color: var(--amber); margin-bottom: 6px;">
+                        &bull; {{ sectorinfo.beacon }}
+                    </div>
                 {% endif %}
-                <table>
-                    <tr>
-                        <td>{{ '%s [%s]'|format(tr.l_planet_in_sec, sectorinfo.id()) }}</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <table border=0 width="100%">
-                                {%  if not planetsInSector %}
-                                    <tr>
-                                        <td>
-                                            {{ tr.l_none }}
-                                        </td>
-                                    </tr>
-                                {% else %}
-                                    {% for planet in planetsInSector %}
-                                        <tr>
-                                            <td>
-                                                <a href="planet.php?planet_id={{ planet.id() }}">
-                                                    <table>
-                                                        <tr>
-                                                            <td rowspan="2"><div class="planettypes-{{ planet.level() }}"></div></td>
-                                                            <td>{{ planet.name() }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>{{ planet.ownerName() }}</td>
-                                                        </tr>
-                                                    </table>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                {% endif %}
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>{{ '%s [%s]'|format(tr.l_ships_in_sec, sectorinfo.id()) }}</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <table border=0 width="100%">
-                                {% if not shipsInSector %}
-                                    <tr>
-                                        <td>
-                                            {{ tr.l_sector_0 }}
-                                        </td>
-                                    </tr>
-                                {% else %}
-                                    {% for shipInSector in shipsInSector %}
-                                        <tr>
-                                            <td>
-                                                {% if shipInSector.isDisplayed() %}
-                                                    <a href="ship2.php?ship_id={{ shipInSector.id() }}">
-                                                        <table>
-                                                            <tr>
-                                                                <td rowspan="3"><div class="shiptypes-{{ shipInSector.level() }}"></div></td>
-                                                                <td>{{ shipInSector.name() }}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>{{ shipInSector.character() }}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>{{ shipInSector.team() }}</td>
-                                                            </tr>
-                                                        </table>
-                                                    </a>
-                                                {% else %}
-                                                    <table>
-                                                        <tr>
-                                                            <td rowspan="2"><div class="shiptypes-{{ shipInSector.level() }}"></div></td>
-                                                            <td>{{ tr.l_unknown }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>{{ tr.l_unknown }}</td>
-                                                        </tr>
-                                                    </table>
-                                                {% endif %}
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                {% endif %}
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-            <td>
-                <table border=0 width="100%">
-                    <tr>
-                        <td>{{ tr.l_sector_def }}</td>
-                    </tr>
-                </table>
-                <table border=0 width="100%">
-                    {%  if not defencesInSector %}
-                        <tr>
-                            <td>{{ tr.l_none }}</td>
-                        </tr>
-                    {% else %}
-                        {% for  defenceInSector in defencesInSector %}
-                            <tr>
-                                <td>
-                                    <a href="modify_defences.php?defence_id={{ defenceInSector.id() }}">
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <div class="sectordefencetypes-{{ defenceInSector.type() }}"></div>
-                                                </td>
-                                                <td>{{ defenceInSector.name() }}</td>
-                                            </tr>
-                                            <tr colspan="2">
-                                                <td>
-                                                    {{ defenceInSector.shipname() }}
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </a>
-                                </td>
-                            </tr>
+                <div style="font-size: 13px;">
+                    <a href="zoneinfo.php?zone={{ zoneinfo.zone_id }}" style="color: var(--cyan);">
+                        Zone: {{ zoneinfo.zone_name }}
+                    </a>
+                </div>
+            </div>
+
+            <div style="background: rgba(15, 23, 42, 0.6); padding: 14px; border-radius: 10px; border: 1px solid var(--border-subtle); flex: 1;">
+                <h3 style="font-size: 13px; text-transform: uppercase; color: var(--cyan); margin-bottom: 10px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 6px;">
+                    {{ tr.l_traderoutes }}
+                </h3>
+                {% if not traderoutes %}
+                    <div style="color: var(--text-muted); font-size: 13px; margin-bottom: 12px;">{{ tr.l_none }}</div>
+                {% else %}
+                    <div style="display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px;">
+                        {% for traderoute in traderoutes %}
+                            <a href="traderoute.php?engage={{ traderoute.id() }}" class="btn" style="font-size: 12px; padding: 4px 8px; text-align: left;">
+                                &raquo; {{ traderoute.src() }} {{ traderoute.direction() }} {{ traderoute.dst() }}
+                            </a>
                         {% endfor %}
-                    {% endif %}
-                </table>
-                <table> 
-                    <tr>
-                        <td>
-                            <table> 
-                                <tr>
-                                    <td colspan="2">
-                                        {{ tr.l_cargo }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><img  src="images/ore.gif"> {{ tr.l_ore }}</td>
-                                    <td>{{ playerinfo.ore() }}</td>
-                                </tr>
-                                <tr>
-                                    <td><img  src="images/organics.gif"> {{ tr.l_organics }}</td>
-                                    <td>{{ playerinfo.organics() }}</td>
-                                </tr>
-                                <tr>
-                                    <td><img  src="images/goods.gif"> {{ tr.l_goods }}</td>
-                                    <td>{{ playerinfo.goods() }}</td>
-                                </tr>
-                                <tr>
-                                    <td><img   src="images/energy.gif"> {{ tr.l_energy }}</td> 
-                                    <td>{{ playerinfo.energy() }}</td>
-                                </tr>
-                                <tr>
-                                    <td><img  src="images/colonists.gif"> {{ tr.l_colonists }}</td> 
-                                    <td>{{ playerinfo.colonists() }}</td>
-                                </tr>
-                                <tr>
-                                    <td><img src="images/credits.gif"> {{ tr.l_credits }}</td>
-                                    <td>{{ playerinfo.credits() }}</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <td>
-                            {{ tr.l_realspace }}
+                    </div>
+                {% endif %}
+                <div style="margin-top: 10px;">
+                    <a href="traderoute.php" style="font-size: 12.5px; color: var(--emerald);">&raquo; {{ tr.l_trade_control }}</a>
+                </div>
+            </div>
+        </div>
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div >
-                                <a  href="rsmove.php?engage=1&amp;destination={{ playerinfo.preset(1) }}">=&gt;{{ playerinfo.preset(1) }}</a> <a  href=preset.php>[{{ tr.l_set }}]</a><br>
-                                <a  href="rsmove.php?engage=1&amp;destination={{ playerinfo.preset(2) }}">=&gt;{{ playerinfo.preset(2) }}</a> <a  href=preset.php>[{{ tr.l_set }}]</a><br>
-                                <a  href="rsmove.php?engage=1&amp;destination={{ playerinfo.preset(3) }}">=&gt;{{ playerinfo.preset(3) }}</a> <a  href=preset.php>[{{ tr.l_set }}]</a><br>
-                                <a  href="rsmove.php">=&gt;{{ tr.l_main_other }}</a><br>
+        <!-- Center Column: Visual Viewport, Port, Planets & Ships -->
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+            <!-- Port / Space Station View -->
+            <div style="background: rgba(15, 23, 42, 0.6); padding: 16px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+                {% if sectorinfo.isPort() %}
+                    <a href="port.php" style="display: block; text-decoration: none;">
+                        <div style="display: flex; align-items: center; gap: 18px; margin-bottom: 12px;">
+                            <div class="space_station_port"></div>
+                            <div>
+                                <div style="font-size: 1.1rem; font-weight: bold; color: var(--cyan);">
+                                    {{ tr.l_tradingport }}: {{ sectorinfo.portTypeName()|capitalize }}
+                                </div>
+                                <div style="font-size: 12px; color: var(--emerald); margin-top: 2px;">
+                                    &raquo; Click to Dock &amp; Trade at Star Port
+                                </div>
                             </div>
-                        </td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <td>
-                            {{ tr.l_main_warpto }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <TD NOWRAP>
-                            <div >
-                                {% if not links %}
-                                    <a >{{ tr.l_no_warplink }}</a><br>
-                                {% else %}
-                                    {% for  link in links  %}
-                                        <a  href="move2.php?sector={{ link.link_dest }}">
-                                            =&gt;{{ link.link_dest }}
-                                        </a>
-                                        <a  href="lrscan.php?sector={{ link.link_dest }}">
-                                            [{{ tr.l_scan }}]
-                                        </a><br>
-                                    {% endfor %}
-                                {% endif %}
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td nowrap align=center>
-                            <div >
-                                <a  href="lrscan.php?sector=*">[{{ tr.l_fullscan }}]</a><br>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
+                        </div>
+                        <table style="margin: 0; font-size: 13px;">
+                            <thead>
+                                <tr>
+                                    <th>Commodity</th>
+                                    <th>Available Supply</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><img src="images/ore.gif" align="absmiddle"> {{ tr.l_ore }}</td><td style="color: var(--amber);">{{ sectorinfo.ore() }}</td></tr>
+                                <tr><td><img src="images/organics.gif" align="absmiddle"> {{ tr.l_organics }}</td><td style="color: var(--emerald);">{{ sectorinfo.organics() }}</td></tr>
+                                <tr><td><img src="images/goods.gif" align="absmiddle"> {{ tr.l_goods }}</td><td style="color: var(--cyan);">{{ sectorinfo.goods() }}</td></tr>
+                                <tr><td><img src="images/energy.gif" align="absmiddle"> {{ tr.l_energy }}</td><td style="color: #e2e8f0;">{{ sectorinfo.energy() }}</td></tr>
+                            </tbody>
+                        </table>
+                    </a>
+                {% else %}
+                    <div style="display: flex; align-items: center; gap: 16px; padding: 8px 0;">
+                        <div class="space_station"></div>
+                        <div style="color: var(--text-muted); font-size: 13.5px;">
+                            No commercial star port established in this sector.
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
 
-            </td>
-        </tr>
-    </table>
+            <!-- Planets in Sector -->
+            <div style="background: rgba(15, 23, 42, 0.6); padding: 14px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+                <h3 style="font-size: 13px; text-transform: uppercase; color: var(--cyan); margin-bottom: 10px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 6px;">
+                    {{ '%s [Sector %s]'|format(tr.l_planet_in_sec, sectorinfo.id()) }}
+                </h3>
+                {% if not planetsInSector %}
+                    <div style="color: var(--text-muted); font-size: 13px; padding: 6px 0;">{{ tr.l_none }}</div>
+                {% else %}
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;">
+                        {% for planet in planetsInSector %}
+                            <a href="planet.php?planet_id={{ planet.id() }}" style="display: flex; align-items: center; gap: 10px; background: rgba(30, 41, 59, 0.6); padding: 8px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                                <div class="planettypes-{{ planet.level() }}"></div>
+                                <div>
+                                    <strong style="color: var(--cyan); display: block; font-size: 13px;">{{ planet.name() }}</strong>
+                                    <span style="font-size: 11.5px; color: var(--text-muted);">{{ planet.ownerName() }}</span>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Ships in Sector -->
+            <div style="background: rgba(15, 23, 42, 0.6); padding: 14px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+                <h3 style="font-size: 13px; text-transform: uppercase; color: var(--cyan); margin-bottom: 10px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 6px;">
+                    {{ '%s [Sector %s]'|format(tr.l_ships_in_sec, sectorinfo.id()) }}
+                </h3>
+                {% if not shipsInSector %}
+                    <div style="color: var(--text-muted); font-size: 13px; padding: 6px 0;">{{ tr.l_sector_0 }}</div>
+                {% else %}
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;">
+                        {% for shipInSector in shipsInSector %}
+                            {% if shipInSector.isDisplayed() %}
+                                <a href="ship2.php?ship_id={{ shipInSector.id() }}" style="display: flex; align-items: center; gap: 10px; background: rgba(30, 41, 59, 0.6); padding: 8px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                                    <div class="shiptypes-{{ shipInSector.level() }}"></div>
+                                    <div>
+                                        <strong style="color: var(--cyan); display: block; font-size: 13px;">{{ shipInSector.name() }}</strong>
+                                        <span style="font-size: 11.5px; color: var(--text-muted);">{{ shipInSector.character() }}</span>
+                                        {% if shipInSector.team() %}
+                                            <span style="font-size: 11px; color: var(--amber); display: block;">[{{ shipInSector.team() }}]</span>
+                                        {% endif %}
+                                    </div>
+                                </a>
+                            {% else %}
+                                <div style="display: flex; align-items: center; gap: 10px; background: rgba(30, 41, 59, 0.6); padding: 8px; border-radius: 8px;">
+                                    <div class="shiptypes-{{ shipInSector.level() }}"></div>
+                                    <div style="color: var(--text-muted); font-size: 12px;">{{ tr.l_unknown }}</div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Right Column: Hold & Helm Operations -->
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+            <!-- Sector Defenses -->
+            <div style="background: rgba(15, 23, 42, 0.6); padding: 14px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+                <h3 style="font-size: 13px; text-transform: uppercase; color: var(--cyan); margin-bottom: 10px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 6px;">
+                    {{ tr.l_sector_def }}
+                </h3>
+                {% if not defencesInSector %}
+                    <div style="color: var(--text-muted); font-size: 13px;">{{ tr.l_none }}</div>
+                {% else %}
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        {% for defenceInSector in defencesInSector %}
+                            <a href="modify_defences.php?defence_id={{ defenceInSector.id() }}" style="display: flex; align-items: center; gap: 8px; background: rgba(30, 41, 59, 0.6); padding: 6px; border-radius: 6px;">
+                                <div class="sectordefencetypes-{{ defenceInSector.type() }}"></div>
+                                <div>
+                                    <strong style="color: var(--rose); font-size: 12.5px;">{{ defenceInSector.name() }}</strong>
+                                    <span style="font-size: 11px; color: var(--text-muted); display: block;">{{ defenceInSector.shipname() }}</span>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Ship Cargo Hold -->
+            <div style="background: rgba(15, 23, 42, 0.6); padding: 14px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+                <h3 style="font-size: 13px; text-transform: uppercase; color: var(--cyan); margin-bottom: 10px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 6px;">
+                    {{ tr.l_cargo }}
+                </h3>
+                <table style="margin: 0; font-size: 12.5px;">
+                    <tbody>
+                        <tr><td><img src="images/ore.gif" align="absmiddle"> {{ tr.l_ore }}</td><td style="color: var(--amber); text-align: right;">{{ playerinfo.ore() }}</td></tr>
+                        <tr><td><img src="images/organics.gif" align="absmiddle"> {{ tr.l_organics }}</td><td style="color: var(--emerald); text-align: right;">{{ playerinfo.organics() }}</td></tr>
+                        <tr><td><img src="images/goods.gif" align="absmiddle"> {{ tr.l_goods }}</td><td style="color: var(--cyan); text-align: right;">{{ playerinfo.goods() }}</td></tr>
+                        <tr><td><img src="images/energy.gif" align="absmiddle"> {{ tr.l_energy }}</td><td style="color: #fff; text-align: right;">{{ playerinfo.energy() }}</td></tr>
+                        <tr><td><img src="images/colonists.gif" align="absmiddle"> {{ tr.l_colonists }}</td><td style="color: #cbd5e1; text-align: right;">{{ playerinfo.colonists() }}</td></tr>
+                        <tr><td><img src="images/credits.gif" align="absmiddle"> {{ tr.l_credits }}</td><td style="color: #34d399; font-weight: bold; text-align: right;">{{ playerinfo.credits() }}</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Warp Navigation Links -->
+            <div style="background: rgba(15, 23, 42, 0.6); padding: 14px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+                <h3 style="font-size: 13px; text-transform: uppercase; color: var(--cyan); margin-bottom: 10px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 6px;">
+                    {{ tr.l_main_warpto }}
+                </h3>
+                {% if not links %}
+                    <div style="color: var(--text-muted); font-size: 13px;">{{ tr.l_no_warplink }}</div>
+                {% else %}
+                    <div style="display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px;">
+                        {% for link in links %}
+                            <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(30, 41, 59, 0.6); padding: 4px 8px; border-radius: 6px;">
+                                <a href="move2.php?sector={{ link.link_dest }}" style="font-weight: bold; color: var(--cyan);">
+                                    &raquo; Sector {{ link.link_dest }}
+                                </a>
+                                <a href="lrscan.php?sector={{ link.link_dest }}" style="font-size: 11.5px; color: var(--amber);">
+                                    [{{ tr.l_scan }}]
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <div style="text-align: center; margin-top: 8px;">
+                    <a href="lrscan.php?sector=*" class="btn" style="font-size: 11.5px; padding: 4px 10px;">
+                        {{ tr.l_fullscan }}
+                    </a>
+                </div>
+            </div>
+
+            <!-- Realspace Navigation -->
+            <div style="background: rgba(15, 23, 42, 0.6); padding: 14px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+                <h3 style="font-size: 13px; text-transform: uppercase; color: var(--cyan); margin-bottom: 10px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 6px;">
+                    {{ tr.l_realspace }}
+                </h3>
+                <div style="display: flex; flex-direction: column; gap: 6px; font-size: 12.5px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <a href="rsmove.php?engage=1&amp;destination={{ playerinfo.preset(1) }}">&raquo; Sector {{ playerinfo.preset(1) }}</a>
+                        <a href="preset.php" style="font-size: 11px; color: var(--text-muted);">[{{ tr.l_set }}]</a>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <a href="rsmove.php?engage=1&amp;destination={{ playerinfo.preset(2) }}">&raquo; Sector {{ playerinfo.preset(2) }}</a>
+                        <a href="preset.php" style="font-size: 11px; color: var(--text-muted);">[{{ tr.l_set }}]</a>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <a href="rsmove.php?engage=1&amp;destination={{ playerinfo.preset(3) }}">&raquo; Sector {{ playerinfo.preset(3) }}</a>
+                        <a href="preset.php" style="font-size: 11px; color: var(--text-muted);">[{{ tr.l_set }}]</a>
+                    </div>
+                    <div style="margin-top: 4px; border-top: 1px solid var(--border-subtle); padding-top: 6px;">
+                        <a href="rsmove.php" style="color: var(--amber);">&raquo; {{ tr.l_main_other }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -8,7 +8,7 @@ use Psr\Container\ContainerInterface;
 use BNT\Servant;
 use BNT\Ship\Entity\Ship;
 use BNT\Ship\DAO\ShipSaveDAO;
-use BNT\Bounty\Bounty;
+use BNT\Bounty\Entity\Bounty;
 use BNT\Bounty\DAO\BountyRetrieveManyByCriteriaDAO;
 use BNT\Bounty\DAO\BountyRemoveByCriteriaDAO;
 use BNT\Planet\Entity\Planet;

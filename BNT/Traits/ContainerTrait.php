@@ -9,9 +9,9 @@ use Psr\Container\ContainerInterface;
 trait ContainerTrait
 {
 
-    protected ContainerInterface $container;
+    protected ?ContainerInterface $container = null;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(?ContainerInterface $container = null)
     {
         $this->container = $container;
     }

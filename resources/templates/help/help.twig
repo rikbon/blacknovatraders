@@ -1,0 +1,174 @@
+{% extends "layout.twig" %}
+{% block title %}Commander Field Operations Manual &amp; Game Guide{% endblock %}
+{% block content %}
+    <div style="margin-bottom: 24px;">
+        <h2 style="color: var(--cyan); margin-bottom: 6px;">Commander Field Operations Manual</h2>
+        <p style="color: var(--text-muted); font-size: 14px; margin: 0;">
+            Welcome to <strong>BlackNova Traders</strong> — an intergalactic sandbox of interstellar exploration, high-stakes commodity arbitrage, planetary conquest, and tactical space combat.
+        </p>
+    </div>
+
+    <!-- Quick Navigation Jump Bar -->
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; background: rgba(15, 23, 42, 0.6); padding: 12px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+        <a href="#navigation" class="btn" style="font-size: 12px; padding: 4px 10px;">Tactical Navigation</a>
+        <a href="#ports" class="btn" style="font-size: 12px; padding: 4px 10px;">Star Ports &amp; Trade</a>
+        <a href="#planets" class="btn" style="font-size: 12px; padding: 4px 10px;">Planets &amp; Colonies</a>
+        <a href="#techlevels" class="btn" style="font-size: 12px; padding: 4px 10px;">Ship Systems &amp; Upgrades</a>
+        <a href="#devices" class="btn" style="font-size: 12px; padding: 4px 10px;">Special Tactical Devices</a>
+        <a href="#zones" class="btn" style="font-size: 12px; padding: 4px 10px;">Galactic Zones</a>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 24px;">
+        
+        <!-- Tactical Navigation -->
+        <div id="navigation" style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+            <h3 style="color: var(--cyan); font-size: 1.2rem; margin-bottom: 12px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px;">
+                1. Tactical Navigation &amp; Sector Maneuvers
+            </h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+                <div>
+                    <h4 style="color: var(--emerald); font-size: 14px; margin-bottom: 4px;">Warp Links</h4>
+                    <p style="font-size: 13px; color: var(--text-muted); margin: 0 0 10px 0;">
+                        Sectors are connected via natural sub-space corridors. Click any warp destination in your bridge HUD to instantly travel there. Each jump consumes 1 turn.
+                    </p>
+                </div>
+                <div>
+                    <h4 style="color: var(--amber); font-size: 14px; margin-bottom: 4px;">Long-Range Scanners</h4>
+                    <p style="font-size: 13px; color: var(--text-muted); margin: 0 0 10px 0;">
+                        Inspect adjacent sectors before jumping to check for enemy battle fleets, minefields, or active orbital ports without moving your vessel.
+                    </p>
+                </div>
+                <div>
+                    <h4 style="color: var(--cyan); font-size: 14px; margin-bottom: 4px;">RealSpace Sub-Light Engines</h4>
+                    <p style="font-size: 13px; color: var(--text-muted); margin: 0 0 10px 0;">
+                        Travel directly to non-adjacent sectors across the cosmos. RealSpace moves consume multiple turns based on distance and your Engine tech level.
+                    </p>
+                </div>
+                <div>
+                    <h4 style="color: var(--rose); font-size: 14px; margin-bottom: 4px;">Automated Trade Routes</h4>
+                    <p style="font-size: 13px; color: var(--text-muted); margin: 0 0 10px 0;">
+                        Configure automated trade loops between complementary ports to execute repeated buying and selling in a single command, maximizing hourly profit.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Star Ports & Commodities -->
+        <div id="ports" style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+            <h3 style="color: var(--emerald); font-size: 1.2rem; margin-bottom: 12px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px;">
+                2. Orbital Star Ports &amp; Commodity Arbitrage
+            </h3>
+            <p style="font-size: 13.5px; color: var(--text-main); margin-bottom: 14px;">
+                Star ports buy and sell four fundamental galactic commodities:
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+                <div style="background: rgba(30, 41, 59, 0.6); padding: 12px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                    <strong style="color: var(--amber);"><img src="images/ore.gif" align="absmiddle"> Ore</strong>
+                    <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Heavy metals required for structural hull upgrades and torpedo construction.</div>
+                </div>
+                <div style="background: rgba(30, 41, 59, 0.6); padding: 12px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                    <strong style="color: var(--emerald);"><img src="images/organics.gif" align="absmiddle"> Organics</strong>
+                    <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Foodstuffs and life support materials required for planetary colonies.</div>
+                </div>
+                <div style="background: rgba(30, 41, 59, 0.6); padding: 12px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                    <strong style="color: var(--cyan);"><img src="images/goods.gif" align="absmiddle"> Goods</strong>
+                    <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Manufactured goods and electronic systems needed for starship equipment.</div>
+                </div>
+                <div style="background: rgba(30, 41, 59, 0.6); padding: 12px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                    <strong style="color: #fff;"><img src="images/energy.gif" align="absmiddle"> Energy</strong>
+                    <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Antimatter plasma cells powering beam weapons, shields, and warp drives.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ship Systems & Upgrades -->
+        <div id="techlevels" style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+            <h3 style="color: var(--cyan); font-size: 1.2rem; margin-bottom: 12px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px;">
+                3. Ship Systems &amp; Tech Level Upgrades
+            </h3>
+            <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 14px;">
+                Upgrade your vessel components at Special Star Ports to enhance tactical capabilities:
+            </p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>System</th>
+                        <th>Tactical Function</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Hull</strong></td><td>Expands cargo hold capacity for transporting commodities, colonists, and military units.</td></tr>
+                    <tr><td><strong>Engines</strong></td><td>Increases sub-light velocity, dramatically reducing turn costs for RealSpace travel.</td></tr>
+                    <tr><td><strong>Power Plant</strong></td><td>Increases energy reservoir capacity for powering ship shields and laser cannons.</td></tr>
+                    <tr><td><strong>Battle Computer</strong></td><td>Controls maximum simultaneous fighter drones deployed in combat.</td></tr>
+                    <tr><td><strong>Sensor Array</strong></td><td>Increases scanning range and penetration against cloaked vessels and hidden planets.</td></tr>
+                    <tr><td><strong>Armour Plating</strong></td><td>Provides structural integrity points protecting against direct hull breach damage.</td></tr>
+                    <tr><td><strong>Shield Deflector</strong></td><td>Generates energy barrier absorbing kinetic and energy weapon impacts.</td></tr>
+                    <tr><td><strong>Beam Cannons</strong></td><td>Primary direct-fire energy weapon firing high-power laser salvos.</td></tr>
+                    <tr><td><strong>Torpedo Launchers</strong></td><td>Long-range warhead launchers capable of devastating planetary citadels and ships.</td></tr>
+                    <tr><td><strong>Cloaking Device</strong></td><td>Masks vessel signature to evade radar scans, sector defenses, and pirate pursuit.</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Special Tactical Devices -->
+        <div id="devices" style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+            <h3 style="color: var(--amber); font-size: 1.2rem; margin-bottom: 12px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px;">
+                4. Special Tactical Devices
+            </h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px;">
+                <div style="background: rgba(30, 41, 59, 0.5); padding: 12px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                    <strong style="color: var(--cyan);">Genesis Torpedoes</strong>
+                    <p style="font-size: 12.5px; color: var(--text-muted); margin: 4px 0 0 0;">Spawns a brand-new colonizable planet in empty space sectors.</p>
+                </div>
+                <div style="background: rgba(30, 41, 59, 0.5); padding: 12px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                    <strong style="color: var(--emerald);">Space Beacons</strong>
+                    <p style="font-size: 12.5px; color: var(--text-muted); margin: 4px 0 0 0;">Broadcasts persistent sector warnings and messages to all passing ships.</p>
+                </div>
+                <div style="background: rgba(30, 41, 59, 0.5); padding: 12px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                    <strong style="color: var(--amber);">Warp Editors</strong>
+                    <p style="font-size: 12.5px; color: var(--text-muted); margin: 4px 0 0 0;">Creates new warp links or collapses existing corridors to isolate territory.</p>
+                </div>
+                <div style="background: rgba(30, 41, 59, 0.5); padding: 12px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                    <strong style="color: var(--rose);">Mine Deflectors</strong>
+                    <p style="font-size: 12.5px; color: var(--text-muted); margin: 4px 0 0 0;">Automatically destroys sector space mines before they detonate on your hull.</p>
+                </div>
+                <div style="background: rgba(30, 41, 59, 0.5); padding: 12px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                    <strong style="color: #fff;">Emergency Warp Unit</strong>
+                    <p style="font-size: 12.5px; color: var(--text-muted); margin: 4px 0 0 0;">Instantly warps your vessel to a random safe sector if under lethal attack.</p>
+                </div>
+                <div style="background: rgba(30, 41, 59, 0.5); padding: 12px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                    <strong style="color: #34d399;">Escape Pod &amp; Fuel Scoop</strong>
+                    <p style="font-size: 12.5px; color: var(--text-muted); margin: 4px 0 0 0;">Preserves your life, credits, and planets upon ship destruction, while fuel scoops harvest solar energy.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Galactic Zones -->
+        <div id="zones" style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 10px; border: 1px solid var(--border-subtle);">
+            <h3 style="color: var(--rose); font-size: 1.2rem; margin-bottom: 12px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px;">
+                5. Galactic Zones &amp; Sovereignty
+            </h3>
+            <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 12px;">
+                Sectors belong to governed space zones:
+            </p>
+            <ul style="font-size: 13.5px; color: var(--text-main); line-height: 1.8; margin: 0; padding-left: 20px;">
+                <li><strong style="color: var(--cyan);">Federation Space (Sector 1)</strong>: Protected sanctuary where combat and piracy are strictly outlawed. Capital dreadnoughts exceeding the hull limit are safely towed out.</li>
+                <li><strong style="color: var(--emerald);">Corporate Territory</strong>: Sectors claimed by player alliances through citadel bases. Custom trade taxes and defense permissions can be enforced.</li>
+                <li><strong style="color: var(--rose);">Uncharted War Zones</strong>: Lawless frontier space where full PvP combat, mine deployment, and planetary bombardment are unrestricted.</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div style="text-align: center; margin-top: 24px;">
+        {% if isLogged %}
+            <a href="main.php" class="btn">&laquo; Return to Main Menu</a>
+        {% else %}
+            <a href="index.php">Home</a> |
+            <a href="login.php">Login</a> |
+            <a href="new.php">Create Player</a> |
+            <a href="ranking.php">Rankings</a>
+        {% endif %}
+    </div>
+{% endblock %}

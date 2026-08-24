@@ -7,9 +7,9 @@ namespace BNT\Zone\Exception;
 class ZoneException extends \Exception
 {
 
-    public static function make(): self
+    public static function make(string $message = 'Zone error'): self
     {
-        
+        return new self($message);
     }
 
     public static function warzone(): self

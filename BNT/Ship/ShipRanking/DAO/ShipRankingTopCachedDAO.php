@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BNT\Ship\ShipRanking\DAO;
 
-abstract class ShipRankingTopCachedDAO implements \BNT\DAO
+abstract class ShipRankingTopCachedDAO extends \BNT\DAO
 {
     use \BNT\Traits\CacheTrait;
 

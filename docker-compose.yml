@@ -1,0 +1,123 @@
+services:
+  web:
+    image: nginx:alpine
+    container_name: bnt_web
+    restart: unless-stopped
+    ports:
+      - "${WEB_PORT:-8080}:80"
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./:/app
+    depends_on:
+      - php
+    networks:
+      - bnt-net
+
+  php:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: bnt_php
+    restart: unless-stopped
+    volumes:
+      - ./:/app
+    environment:
+      BNT_DATABASE_TYPE: ${BNT_DATABASE_TYPE:-mysqli}
+      BNT_DATABASE_HOST: ${BNT_DATABASE_HOST:-db}
+      BNT_DATABASE_USERNAME: ${BNT_DATABASE_USERNAME:-root}
+      BNT_DATABASE_PASSWORD: ${BNT_DATABASE_PASSWORD:-root}
+      BNT_DATABASE_NAME: ${BNT_DATABASE_NAME:-bnt}
+      BNT_DATABASE_PREFIX: ${BNT_DATABASE_PREFIX:-bnt_}
+      BNT_DATABASE_PORT: ${BNT_DATABASE_PORT:-3306}
+      BNT_DATABASE_CHARSET: ${BNT_DATABASE_CHARSET:-utf8mb4}
+      BNT_ADMIN_NAME: ${BNT_ADMIN_NAME:-Admin}
+      BNT_ADMIN_EMAIL: ${BNT_ADMIN_EMAIL:-admin@example.com}
+      BNT_ADMIN_PASSWORD: ${BNT_ADMIN_PASSWORD:-secret}
+      MEMCACHED_HOST: ${MEMCACHED_HOST:-memcached}
+      MEMCACHED_PORT: ${MEMCACHED_PORT:-11211}
+    depends_on:
+      - db
+      - memcached
+    networks:
+      - bnt-net
+
+  db:
+    image: mariadb:10.11
+    container_name: bnt_db
+    restart: unless-stopped
+    command: --max_allowed_packet=32M --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${BNT_DATABASE_PASSWORD:-root}
+      MYSQL_DATABASE: ${BNT_DATABASE_NAME:-bnt}
+    volumes:
+      - bnt_db_data:/var/lib/mysql
+      - ./docker/dev/migrations/:/docker-entrypoint-initdb.d/
+    networks:
+      - bnt-net
+
+  scheduler:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: bnt_scheduler
+    restart: unless-stopped
+    command: ["/app/docker/scheduler/scheduler-loop.sh"]
+    volumes:
+      - ./:/app
+    environment:
+      SCHEDULER_INTERVAL_SEC: ${SCHEDULER_INTERVAL_SEC:-60}
+      BNT_DATABASE_TYPE: ${BNT_DATABASE_TYPE:-mysqli}
+      BNT_DATABASE_HOST: ${BNT_DATABASE_HOST:-db}
+      BNT_DATABASE_USERNAME: ${BNT_DATABASE_USERNAME:-root}
+      BNT_DATABASE_PASSWORD: ${BNT_DATABASE_PASSWORD:-root}
+      BNT_DATABASE_NAME: ${BNT_DATABASE_NAME:-bnt}
+      BNT_DATABASE_PREFIX: ${BNT_DATABASE_PREFIX:-bnt_}
+      BNT_DATABASE_PORT: ${BNT_DATABASE_PORT:-3306}
+      BNT_DATABASE_CHARSET: ${BNT_DATABASE_CHARSET:-utf8mb4}
+    depends_on:
+      - db
+    networks:
+      - bnt-net
+
+  memcached:
+    image: memcached:1.6-alpine
+    container_name: bnt_memcached
+    restart: unless-stopped
+    ports:
+      - "${MEMCACHED_PORT:-11211}:11211"
+    networks:
+      - bnt-net
+
+  adminer:
+    image: adminer:latest
+    container_name: bnt_adminer
+    restart: unless-stopped
+    ports:
+      - "${ADMINER_PORT:-8081}:8080"
+    environment:
+      ADMINER_DEFAULT_SERVER: db
+    depends_on:
+      - db
+    networks:
+      - bnt-net
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: bnt_mailpit
+    restart: unless-stopped
+    ports:
+      - "${MAILPIT_HTTP_PORT:-8025}:8025"
+      - "${MAILPIT_SMTP_PORT:-1025}:1025"
+    networks:
+      - bnt-net
+
+volumes:
+  bnt_db_data:
+    name: bnt_db_data
+
+networks:
+  bnt-net:
+    name: bnt-network
+    driver: bridge

@@ -1,30 +1,41 @@
 {% extends "layout.twig" %}
 {% block title %}{{ tr.l_new_title }}{% endblock %}
 {% block content %}
-    <form action="new2.php" method="post">
-        <center>
-            <table  width="" border="0" cellspacing="0" cellpadding="4">
-                <tr>
-                    <td>{{ tr.l_login_email }}</td>
-                    <td><input type="text" name="username" size="20" maxlength="40" value=""></td>
-                </tr>
-                <tr>
-                    <td>{{ tr.l_new_shipname }}</td>
-                    <td><input type="text" name="shipname" size="20" maxlength="20" value=""></td>
-                </tr>
-                <tr>
-                    <td>{{ tr.l_new_pname }}</td>
-                    <td><input type="text" name="character" size="20" maxlength="20" value=""></td>
-                </tr>
-                <tr>
-                    <td>{{ tr.l_new_password }}</td>
-                    <td><input type="password" name="password" size="20" maxlength="20" value=""></td>
-                </tr>
-            </table>
-            <br>
-            <input type="submit" value="{{ tr.l_submit }}">
-            <input type="reset" value="{{ tr.l_reset }}">
-            <br><br>{{ tr.l_new_info }}<br>
-        </center>
-    </form>
+    <div style="max-width: 520px; margin: 20px auto; padding: 20px 10px;">
+        <h2 style="text-align: center; color: var(--emerald); margin-bottom: 24px;">{{ tr.l_new_title }}</h2>
+        
+        <form action="new2.php" method="post">
+            <div style="margin-bottom: 16px;">
+                <label style="display: block; margin-bottom: 6px; font-weight: 500; font-size: 13.5px; color: var(--text-muted);">{{ tr.l_login_email }}</label>
+                <input type="email" name="username" size="20" maxlength="40" value="" style="width: 100%; padding: 10px 14px;" placeholder="commander@starfleet.org" autofocus required />
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <label style="display: block; margin-bottom: 6px; font-weight: 500; font-size: 13.5px; color: var(--text-muted);">{{ tr.l_new_pname }} (Character Name)</label>
+                <input type="text" name="character" size="20" maxlength="20" value="" style="width: 100%; padding: 10px 14px;" placeholder="Captain Kirk" required />
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <label style="display: block; margin-bottom: 6px; font-weight: 500; font-size: 13.5px; color: var(--text-muted);">{{ tr.l_new_shipname }} (Vessel Name)</label>
+                <input type="text" name="shipname" size="20" maxlength="20" value="" style="width: 100%; padding: 10px 14px;" placeholder="USS Enterprise" required />
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 6px; font-weight: 500; font-size: 13.5px; color: var(--text-muted);">{{ tr.l_new_password }}</label>
+                <input type="password" name="password" size="20" maxlength="20" value="" style="width: 100%; padding: 10px 14px;" placeholder="Choose a strong password" required />
+            </div>
+
+            <div style="text-align: center; margin-bottom: 20px;">
+                <input type="submit" value="Register Commander &amp; Commission Ship" style="width: 100%; padding: 12px; font-size: 15px; background: linear-gradient(135deg, #059669, #10b981); border-color: rgba(52, 211, 153, 0.4);" />
+            </div>
+
+            <div style="font-size: 12px; color: var(--text-muted); line-height: 1.6; text-align: center; background: rgba(0,0,0,0.25); padding: 12px; border-radius: 8px; border: 1px solid var(--border-subtle);">
+                {{ tr.l_new_info }}
+            </div>
+
+            <div style="text-align: center; margin-top: 24px; font-size: 13px;">
+                Already registered? <a href="login.php" style="font-weight: 600;">Login here</a>
+            </div>
+        </form>
+    </div>
 {% endblock %}

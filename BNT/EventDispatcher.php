@@ -18,9 +18,12 @@ class EventDispatcher implements EventDispatcherInterface
     {
         $events = $this->container->get('events');
         $class = get_class($event);
+        $handlers = [];
 
         if (!empty($events[$class])) {
             $handlers = $events[$class];
+        } elseif (isset($event->name) && !empty($events[$event->name])) {
+            $handlers = $events[$event->name];
         } else {
             while (true) {
                 $class = get_parent_class($class);
@@ -37,21 +40,23 @@ class EventDispatcher implements EventDispatcherInterface
         }
 
         foreach ($handlers as $handler) {
-
-            if ($event instanceof StoppableEventInterface) {
-                if ($event->isPropagationStopped()) {
-                    break;
-                }
+            if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {
+                break;
             }
 
-            $handlerObject = new $handler($this->container);
+            if (is_callable($handler)) {
+                $handler($event);
+                continue;
+            }
 
-            if ($handlerObject instanceof UnitInterface && $event instanceof FromToInterface) {
-                $event->to($handlerObject);
+            if (is_string($handler) && class_exists($handler)) {
+                $handlerObject = new $handler($this->container);
 
-                $handlerObject->serve();
-
-                $event->from($handlerObject);
+                if ($handlerObject instanceof UnitInterface && $event instanceof FromToInterface) {
+                    $event->to($handlerObject);
+                    $handlerObject->serve();
+                    $event->from($handlerObject);
+                }
             }
         }
 
