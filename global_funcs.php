@@ -238,7 +238,7 @@ function loadlanguage(string $language): array
     return get_defined_vars();
 }
 
-function connectdb($do_die = true): \BNT\ADODB\ADODBConnection
+function connectdb($do_die = true): ?\BNT\ADODB\ADODBConnection
 {
     global $dbhost;
     global $dbport;
@@ -249,15 +249,22 @@ function connectdb($do_die = true): \BNT\ADODB\ADODBConnection
     global $lang;
     global $gameroot;
     global $db_type;
+    global $db_charset;
     global $db;
     
-    $db = new \BNT\ADODB\ADODBConnection($db_type);
-    $result = $db->Connect($dbhost, $dbuname, $dbpass, $dbname, $dbport);
+    if (isset($db) && $db instanceof \BNT\ADODB\ADODBConnection) {
+        return $db;
+    }
+    
+    $charset = !empty($db_charset) ? $db_charset : 'utf8mb4';
+    $db = new \BNT\ADODB\ADODBConnection($db_type ?? 'mysqli');
+    $result = $db->Connect($dbhost, $dbuname, $dbpass, $dbname, $dbport, $charset);
 
     if (!$result) {
         if ($do_die) {
             die("Unable to connect to the database");
         }
+        return null;
     }
     
     return $db;

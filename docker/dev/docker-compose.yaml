@@ -27,16 +27,18 @@ services:
             - BNT_DATABASE_PREFIX
             - BNT_DATABASE_NAME
             - BNT_DATABASE_PORT
+            - BNT_DATABASE_CHARSET
             - BNT_ADMIN_PASSWORD
             - BNT_ADMIN_NAME
             - BNT_ADMIN_EMAIL
     mysql:
-        image: mysql:5.7
-        command: --max_allowed_packet=32505856
+        image: mariadb:10.11
+        command: --max_allowed_packet=32505856 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
         volumes:
             - ./migrations/:/docker-entrypoint-initdb.d/
         environment:
             MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: bnt
     adminer:
         image: adminer:latest
         ports:
