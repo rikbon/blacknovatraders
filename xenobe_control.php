@@ -323,7 +323,7 @@ else
             "orders smallint(5) DEFAULT '0' NOT NULL," .
             "PRIMARY KEY (xenobe_id)," .
             "KEY xenobe_id (xenobe_id)" .
-            ")");
+            ") ENGINE='InnoDB' COLLATE 'utf8mb4_unicode_ci'");
         echo "created.<BR>";
       }
       else

@@ -27,32 +27,24 @@ $gamepath = "/";
 
 // Hostname and port of the database server:
 // These are defaults, you normally won't have to change them
-$dbhost = getenv('BNT_DATABASE_HOST');
+$dbhost = getenv('BNT_DATABASE_HOST') ?: 'mysql';
 
 // Note : if you do not know the port, set this to "" for default. Ex, MySQL default is 3306
-$dbport = getenv('BNT_DATABASE_PORT');
+$dbport = getenv('BNT_DATABASE_PORT') ?: '3306';
 
 // Username and password to connect to the database:
-$dbuname = getenv('BNT_DATABASE_USERNAME');
-$dbpass = getenv('BNT_DATABASE_PASSWORD');
+$dbuname = getenv('BNT_DATABASE_USERNAME') ?: 'root';
+$dbpass = getenv('BNT_DATABASE_PASSWORD') ?: 'root';
 
 // Name of the SQL database:
-$dbname = getenv('BNT_DATABASE_NAME');
+$dbname = getenv('BNT_DATABASE_NAME') ?: 'bnt';
 
-// Type of the SQL database. This can be anything supported by ADOdb. Here are a few:
-// "access" for MS Access databases. You need to create an ODBC DSN.
-// "ado" for ADO databases
-// "ibase" for Interbase 6 or earlier
-// "borland_ibase" for Borland Interbase 6.5 or up
-// "mssql" for Microsoft SQL
-// "mysql" for MySQL
-// "oci8" for Oracle8/9
-// "odbc" for a generic ODBC database
-// "postgres" for PostgreSQL ver < 7
-// "postgres7" for PostgreSQL ver 7 and up
-// "sybase" for a SyBase database
-// NOTE: only mysql work as of right now, due to SQL compat code
-$db_type = getenv('BNT_DATABASE_TYPE');
+// Type of the SQL database. Supported drivers include:
+// "mysqli" for MySQL / MariaDB via MySQLi
+// "pdo_mysql" for MySQL / MariaDB via PDO
+// "postgres" for PostgreSQL
+// "sqlite" for SQLite
+$db_type = getenv('BNT_DATABASE_TYPE') ?: 'mysqli';
 
 // Set this to 1 to use db persistent connections, 0 otherwise - persistent connections can cause load problems!
 $db_persistent = 0;
@@ -61,13 +53,16 @@ $db_persistent = 0;
 one game of BNT on the same database, or if the current table
 names conflict with tables you already have in your db, you will
 need to change this */
-$db_prefix = getenv('BNT_DATABASE_RREFIX');
+$db_prefix = getenv('BNT_DATABASE_PREFIX') ?: (getenv('BNT_DATABASE_RREFIX') ?: 'bnt_');
+
+// Character set for the database connection:
+$db_charset = getenv('BNT_DATABASE_CHARSET') ?: 'utf8mb4';
 
 // Administrator's password and email:
 // Be sure to change these. Don't leave them as is.
-$adminpass = getenv('BNT_ADMIN_PASSWORD');
-$admin_mail = getenv('BNT_ADMIN_EMAIL');
-$adminname = getenv('BNT_ADMIN_NAME');
+$adminpass = getenv('BNT_ADMIN_PASSWORD') ?: 'secret';
+$admin_mail = getenv('BNT_ADMIN_EMAIL') ?: 'admin@example.com';
+$adminname = getenv('BNT_ADMIN_NAME') ?: 'Admin Name';
 
 // Address the forum link, link's to:
 $link_forums = "http://forums.blacknova.net";
